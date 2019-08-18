@@ -9,7 +9,7 @@ public class Reserva {
    private Date entrada;
    private Date Saida;
    private static SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-   
+   private Date Atual = new Date();
 public Reserva(Integer numerodoQuarto, Date entrada, Date saida) {
 	
 	NumerodoQuarto = numerodoQuarto;
@@ -31,13 +31,21 @@ public Date getSaida() {
 }
 
 public long duração() {
-	long tempo = entrada.getTime() - Saida.getTime();
+	long tempo =  Saida.getTime() - entrada.getTime();
 	return TimeUnit.DAYS.convert(tempo,TimeUnit.MILLISECONDS);
 }
 
-public void MudançaDeDatas(Date Entrada,Date Saida) {
+public String MudançaDeDatas(Date Entrada,Date Saida) {
+	
+	if(Entrada.before(Atual) || Saida.before(Atual)) {
+	  return " Data Invalida";
+	}else if(!Saida.after(Entrada)) {
+		return " ERRO NA DATA";
+	}
+	
 	this.entrada = Entrada;
 	this.Saida = Saida;
+	return null;
 }
 
 

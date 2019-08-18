@@ -30,8 +30,16 @@ public class Principal {
 			 Entrada = sdf.parse(teclado.next());
 			System.out.println(" Data de Saida : (dd/mm/aaaa)");
 			 Saida = sdf.parse(teclado.next());
-			r1.MudançaDeDatas(Entrada, Saida);
+			String error = r1.MudançaDeDatas(Entrada, Saida);
+			
+		 if(error != null) {
+				System.out.println(" ERRO NA DATA");
+			}else {
+				
+				System.out.println(r1);
+				}
 		}
+		teclado.close();
 	}
 
 }
