@@ -4,14 +4,18 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
+import entities.exception.Excessao;
+
 public class Reserva {
    private Integer NumerodoQuarto;
    private Date entrada;
    private Date Saida;
    private static SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
    private Date Atual = new Date();
-public Reserva(Integer numerodoQuarto, Date entrada, Date saida) {
-	
+public Reserva(Integer numerodoQuarto, Date entrada, Date saida)  {
+	if(!saida.after(entrada)) {
+		throw new Excessao ( " Error ");
+	}
 	NumerodoQuarto = numerodoQuarto;
 	this.entrada = entrada;
 	Saida = saida;
@@ -35,17 +39,17 @@ public long duração() {
 	return TimeUnit.DAYS.convert(tempo,TimeUnit.MILLISECONDS);
 }
 
-public String MudançaDeDatas(Date Entrada,Date Saida) {
+public void MudançaDeDatas(Date Entrada,Date Saida) {
 	
 	if(Entrada.before(Atual) || Saida.before(Atual)) {
-	  return " Data Invalida";
+		throw new Excessao( " Data Invalida");
 	}else if(!Saida.after(Entrada)) {
-		return " ERRO NA DATA";
+		throw new Excessao ( " Error ");
 	}
 	
 	this.entrada = Entrada;
 	this.Saida = Saida;
-	return null;
+
 }
 
 

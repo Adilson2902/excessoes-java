@@ -6,10 +6,16 @@ import java.util.Date;
 import java.util.Scanner;
 
 import entities.Reserva;
+import entities.exception.Excessao;
 
 public class Principal {
 
-	public static void main(String[] args) throws ParseException {
+	public static void main(String[] args)  {
+		
+		
+		try {
+			
+		
 		Scanner teclado = new Scanner(System.in);
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
@@ -20,9 +26,7 @@ public class Principal {
 		System.out.println(" Data de Saida : (dd/mm/aaaa)");
 		Date Saida = sdf.parse(teclado.next());
 		
-		if(!Saida.after(Entrada)) {
-			System.out.println(" Data invalida");
-		}else {
+		
 			Reserva r1 = new Reserva(NumeroQuarto, Entrada, Saida);
 			System.out.println(r1);
 			System.out.println(" Nova Reserva ");
@@ -30,16 +34,17 @@ public class Principal {
 			 Entrada = sdf.parse(teclado.next());
 			System.out.println(" Data de Saida : (dd/mm/aaaa)");
 			 Saida = sdf.parse(teclado.next());
-			String error = r1.MudançaDeDatas(Entrada, Saida);
-			
-		 if(error != null) {
-				System.out.println(" ERRO NA DATA");
-			}else {
-				
-				System.out.println(r1);
-				}
-		}
+			 r1.MudançaDeDatas(Entrada, Saida);
+			System.out.println(r1);
+		
 		teclado.close();
+		}catch(ParseException e) {
+			System.out.println(" Data Invalida");
+		}catch(Excessao e) {
+			System.out.println(" Teste " + e.getMessage());
+		}catch(RuntimeException e) {
+			System.out.println(" Error inesperado");
+		}
 	}
 
 }
